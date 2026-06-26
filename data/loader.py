@@ -44,6 +44,7 @@ def load_secom() -> pd.DataFrame:
         data.columns = [f"param_{i:03d}" for i in range(data.shape[1])]
         df = data.copy()
         df["yield_pass"] = (labels.iloc[:, 0] == -1).astype(int)
+        df["yield_pass"] = df["yield_pass"].fillna(1).astype(int)
         df.to_csv(SECOM_DATA_PATH, index=False)
         print(f"✅ SECOM downloaded: {len(df):,} runs")
         return df

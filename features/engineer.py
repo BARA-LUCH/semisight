@@ -24,7 +24,7 @@ def prepare_secom_features(df: pd.DataFrame, variance_threshold: float = 0.01):
     """
     param_cols = [c for c in df.columns if c.startswith("param_")]
     X_raw = df[param_cols].copy()
-    y = df["yield_pass"].values
+    y = df["yield_pass"].fillna(1).astype(int).values  # Fill NaN labels as pass
 
     print(f"📊 Raw features: {X_raw.shape[1]}")
 
