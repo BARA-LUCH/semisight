@@ -289,7 +289,7 @@ if run_btn:
     with st.spinner("ENGINEERING PROCESS PARAMETERS..."):
         try:
             X, y, feat_names, scaler, imputer, selector, keep_cols = prepare_secom_features(df_secom)
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, stratify=y, random_state=42)
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, stratify=y if min((y==0).sum(),(y==1).sum())>=2 else None, random_state=42)
             st.markdown(f'<div class="alert-ok">✓ FEATURE ENGINEERING — {len(feat_names)} features retained from 590 parameters</div>', unsafe_allow_html=True)
         except Exception as e:
             st.markdown(f'<div class="alert-crit">✗ FEATURE ENGINEERING FAILED: {e}</div>', unsafe_allow_html=True)

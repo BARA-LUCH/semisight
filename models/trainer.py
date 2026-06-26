@@ -66,7 +66,8 @@ def train_yield_xgboost(X_train, X_test, y_train, y_test, feature_names) -> dict
     )
 
     # 5-fold stratified CV
-    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    n_splits = min(5, int(min((y_train==0).sum(), (y_train==1).sum())))
+    cv = StratifiedKFold(n_splits=max(2, n_splits), shuffle=True, random_state=42)
     cv_scores = cross_val_score(model, X_train, y_train, cv=cv, scoring="roc_auc")
 
     model.fit(X_train, y_train,
